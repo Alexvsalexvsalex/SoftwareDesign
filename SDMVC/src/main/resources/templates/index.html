@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All lists</title>
+</head>
+<body>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>LINK</th>
+    </tr>
+    <th:block th:each="list : ${lists}">
+        <tr>
+            <td th:text="${list.id}"></td>
+            <td th:text="${list.name}"></td>
+            <td>
+                <a th:href="@{get-list(listId=${list.id})}">edit</a>
+            </td>
+        </tr>
+    </th:block>
+</table>
+
+<h3>Add new list</h3>
+<form th:object="${list}" method="POST" th:action="@{add-list}">
+    <table>
+        <tr>
+            <td><label>Name:</label></td>
+            <td><input type="text" th:field="*{name}"/></td>
+        </tr>
+    </table>
+    <input type="submit" value="add">
+</form>
+</body>
+</html>

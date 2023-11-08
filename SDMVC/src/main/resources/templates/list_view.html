@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List view</title>
+</head>
+<body>
+<a th:href="@{index}">Main page</a>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>FLAG</th>
+        <th>DELETING</th>
+    </tr>
+    <th:block th:each="task : ${tasks}">
+        <tr>
+            <td th:text="${task.id}"/>
+            <td th:text="${task.name}"/>
+            <td>
+                <form method="POST" th:action="@{mark-task(taskId=${task.id}, taskReady=${!task.ready})}">
+                    <input type="submit" th:value="${task.ready ? 'done' : 'not done'}">
+                </form>
+            </td>
+            <td>
+                <form method="POST" th:action="@{delete-task(taskId=${task.id})}">
+                    <input type="submit" value="remove">
+                </form>
+            </td>
+        </tr>
+    </th:block>
+</table>
+<h3>Add new task</h3>
+<form th:object="${task}" method="POST" th:action="@{add-task(listId=${list.id})}">
+    <table>
+        <tr>
+            <td><label>Name:</label></td>
+            <td><input type="text" th:field="*{name}"/></td>
+        </tr>
+    </table>
+    <input type="submit" value="add">
+</form>
+</body>
+</html>
